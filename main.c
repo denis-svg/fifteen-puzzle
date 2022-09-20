@@ -19,6 +19,7 @@
 #define RESTART "restart"
 #define SAVE "save"
 #define RESUME "resume"
+#define NEW "new"
 
 char quit[BUFFER] = QUIT;
 char left[BUFFER] = LEFT;
@@ -32,6 +33,7 @@ char undo[BUFFER] = UNDO;
 char restart[BUFFER] = RESTART;
 char save[BUFFER] = SAVE;
 char resume[BUFFER] = RESUME;
+char new[BUFFER] = NEW;
 int should_check = 0;
 
 void delete_grid(int **arr){
@@ -216,6 +218,8 @@ void display_help(){
     printf("save game->\033[0;32m%s\n", SAVE);
     white();
     printf("resume game->\033[0;32m%s\n", RESUME);
+    white();
+    printf("generate new grid->\033[0;32m%s\n", NEW);
     white();
 }
 
@@ -497,6 +501,20 @@ int main()
 
             fclose(fptr);
             draw(grid);
+        }else if (strcmp(command, new) == 0){
+            delete_grid(grid);
+            free_queue(&front, &rear);
+            free_stack(&Undo_stack);
+            grid = generate_grid();
+            for(int i=0;i<SIZE;i++){
+                for(int j=0;j<SIZE;j++){
+                    if (grid[i][j] == 0){
+                        space_row = i;
+                        space_column = j;
+                }
+            }
+            draw(grid);
+        }
         }
         else{
             red();
