@@ -457,6 +457,14 @@ int main()
                     fscanf(fptr, "%d", &num);
                     grid[i][j] = num;
                 }
+            for(int i=0;i<SIZE;i++){
+                for(int j=0;j<SIZE;j++){
+                    if (grid[i][j] == 0){
+                        space_row = i;
+                        space_column = j;
+                    }
+                }
+            }
 
             int undo_size;
             fscanf(fptr, "%d", &undo_size);
